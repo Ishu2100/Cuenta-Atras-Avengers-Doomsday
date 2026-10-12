@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuenta Atrás - DOOMSDAY</title>
+
+<!-- Fuentes épicas e imponentes -->
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-dark: #050709;
+        --doom-green: #047857;
+        --doom-glow: #10b981;
+        --metal-light: #e2e8f0;
+        --metal-mid: #94a3b8;
+        --metal-dark: #475569;
+        --card-bg: rgba(15, 23, 20, 0.6);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--bg-dark);
+        background-image: 
+            radial-gradient(circle at 50% 120%, rgba(4, 120, 87, 0.4) 0%, transparent 60%),
+            radial-gradient(circle at 10% 10%, rgba(71, 85, 105, 0.2) 0%, transparent 40%);
+        color: #fff;
+        overflow: hidden;
+        position: relative;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .magic-sparks {
+        position: absolute;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background-image: 
+            radial-gradient(var(--doom-glow) 1px, transparent 1px),
+            radial-gradient(var(--doom-green) 2px, transparent 2px);
+        background-size: 60px 60px, 120px 120px;
+        background-position: 0 0, 30px 30px;
+        opacity: 0.15;
+        animation: rise 20s linear infinite;
+        z-index: 1;
+    }
+
+    @keyframes rise {
+        0% { transform: translateY(0) scale(1); opacity: 0.1; }
+        50% { opacity: 0.3; }
+        100% { transform: translateY(-500px) scale(1.2); opacity: 0.1; }
+    }
+
+    .container {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        padding: 2rem 1rem;
+        width: 100%;
+        max-width: 1200px;
+        animation: villain-fade-in 1.5s ease-out forwards;
+    }
+
+    h1 {
+        font-family: 'Bebas Neue', sans-serif;
+        /* Tamaño dinámico: se adapta al ancho de la pantalla */
+        font-size: clamp(3rem, 8vw, 5rem);
+        letter-spacing: clamp(3px, 1vw, 8px);
+        margin-bottom: 0.5rem;
+        background: linear-gradient(to bottom, var(--metal-light) 0%, var(--metal-mid) 50%, var(--metal-dark) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 5px 25px rgba(16, 185, 129, 0.2);
+        line-height: 1.1;
+    }
+
+    .subtitle {
+        font-size: clamp(0.7rem, 2vw, 1rem);
+        font-weight: 700;
+        letter-spacing: clamp(2px, 1vw, 6px);
+        text-transform: uppercase;
+        color: var(--doom-glow);
+        margin-bottom: clamp(2rem, 5vw, 3.5rem);
+        text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+
+    .countdown {
+        display: flex;
+        gap: clamp(0.8rem, 2vw, 1.5rem);
+        justify-content: center;
+        flex-wrap: wrap; /* Permite que las cajas bajen a la siguiente línea en móviles muy pequeños */
+    }
+
+    .box {
+        width: clamp(75px, 22vw, 130px);
+        height: clamp(90px, 25vw, 150px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: var(--card-bg);
+        border: 2px solid var(--metal-dark);
+        border-top: 3px solid var(--metal-light);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 
+                    inset 0 0 20px rgba(4, 120, 87, 0.3);
+        backdrop-filter: blur(10px);
+        transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s;
+        border-radius: 8px; /* Un poco de borde redondeado para que luzca bien en móviles */
+    }
+
+    .box:hover {
+        transform: scale(1.05) translateY(-5px);
+        border-color: var(--metal-mid);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95), 
+                    inset 0 0 30px rgba(16, 185, 129, 0.5),
+                    0 0 20px rgba(16, 185, 129, 0.3);
+    }
+
+    .number {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(2.5rem, 8vw, 5.5rem);
+        line-height: 1;
+        color: #fff;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        margin-bottom: 0.2rem;
+        font-variant-numeric: tabular-nums; 
+    }
+
+    .label {
+        font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+        font-weight: 700;
+        letter-spacing: clamp(1px, 0.5vw, 2px);
+        text-transform: uppercase;
+        color: var(--metal-mid);
+    }
+
+    .finished {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: clamp(3rem, 10vw, 6rem);
+        letter-spacing: 4px;
+        background: linear-gradient(to bottom, #34d399 0%, #047857 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: villain-reveal 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        text-shadow: 0 0 50px rgba(16, 185, 129, 0.6);
+        line-height: 1.1;
+        padding: 0 10px;
+    }
+
+    @keyframes villain-fade-in {
+        from { opacity: 0; transform: scale(1.05); filter: blur(15px); }
+        to { opacity: 1; transform: scale(1); filter: blur(0); }
+    }
+
+    @keyframes villain-reveal {
+        from { opacity: 0; transform: scale(0.8) translateY(20px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .magic-pulse {
+        animation: doom-impact 0.4s ease-out;
+    }
+
+    @keyframes doom-impact {
+        0% { transform: scale(1); color: var(--doom-glow); text-shadow: 0 0 25px var(--doom-glow); }
+        100% { transform: scale(1); color: #fff; text-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
+    }
+</style>
+</head>
+<body>
+
+<div class="magic-sparks"></div>
+
+<div class="container">
+    <h1>VENGADORES: DOOMSDAY</h1>
+    <div class="subtitle">No hay esperanza. Solo existe Doom.</div>
+
+    <div class="countdown" id="countdown-grid">
+        <div class="box">
+            <div id="days" class="number">00</div>
+            <div class="label">Días</div>
+        </div>
+        <div class="box">
+            <div id="hours" class="number">00</div>
+            <div class="label">Horas</div>
+        </div>
+        <div class="box">
+            <div id="minutes" class="number">00</div>
+            <div class="label">Minutos</div>
+        </div>
+        <div class="box">
+            <div id="seconds" class="number">00</div>
+            <div class="label">Segundos</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Fecha objetivo: 17 de diciembre a las 19:00 (7 de la tarde)
+    const target = new Date("2026-12-17T19:00:00").getTime();
+
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const diff = target - now;
+
+        if (diff <= 0) {
+            document.querySelector(".container").innerHTML = `
+                <div class="finished">
+                    ¡ARRODILLAOS ANTE DOOM! 🎭
+                </div>
+            `;
+            return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        const values = { days, hours, minutes, seconds };
+
+        for (const id in values) {
+            const el = document.getElementById(id);
+            if(!el) continue;
+            
+            const value = String(values[id]).padStart(2, "0");
+
+            if (el.textContent !== value) {
+                el.textContent = value;
+                
+                el.classList.remove("magic-pulse");
+                void el.offsetWidth;
+                el.classList.add("magic-pulse");
+            }
+        }
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
