@@ -10,13 +10,14 @@
 
 <style>
     :root {
-        --bg-dark: #050709;
+        --bg-dark: #030507;
         --doom-green: #047857;
         --doom-glow: #10b981;
-        --metal-light: #e2e8f0;
+        --doom-emerald: #059669;
+        --metal-light: #f1f5f9;
         --metal-mid: #94a3b8;
-        --metal-dark: #475569;
-        --card-bg: rgba(15, 23, 20, 0.6);
+        --metal-dark: #334155;
+        --card-bg: rgba(10, 18, 15, 0.75);
     }
 
     * {
@@ -32,131 +33,187 @@
         align-items: center;
         background-color: var(--bg-dark);
         background-image: 
-            radial-gradient(circle at 50% 120%, rgba(4, 120, 87, 0.4) 0%, transparent 60%),
-            radial-gradient(circle at 10% 10%, rgba(71, 85, 105, 0.2) 0%, transparent 40%);
+            radial-gradient(circle at 50% 110%, rgba(4, 120, 87, 0.45) 0%, transparent 65%),
+            radial-gradient(circle at 15% 15%, rgba(15, 23, 42, 0.8) 0%, transparent 50%),
+            radial-gradient(circle at 85% 85%, rgba(6, 78, 59, 0.25) 0%, transparent 50%);
         color: #fff;
-        overflow: hidden;
+        overflow-x: hidden;
         position: relative;
         font-family: 'Montserrat', sans-serif;
     }
 
+    /* Partículas y cenizas flotantes estilo Doom */
     .magic-sparks {
         position: absolute;
         top: 0; left: 0; width: 100%; height: 100%;
         background-image: 
-            radial-gradient(var(--doom-glow) 1px, transparent 1px),
-            radial-gradient(var(--doom-green) 2px, transparent 2px);
-        background-size: 60px 60px, 120px 120px;
-        background-position: 0 0, 30px 30px;
-        opacity: 0.15;
-        animation: rise 20s linear infinite;
+            radial-gradient(var(--doom-glow) 1.5px, transparent 1.5px),
+            radial-gradient(rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+            radial-gradient(var(--doom-green) 2.5px, transparent 2.5px);
+        background-size: 70px 70px, 110px 110px, 160px 160px;
+        background-position: 0 0, 40px 40px, 20px 80px;
+        opacity: 0.2;
+        animation: rise 25s linear infinite;
         z-index: 1;
+        pointer-events: none;
     }
 
     @keyframes rise {
-        0% { transform: translateY(0) scale(1); opacity: 0.1; }
-        50% { opacity: 0.3; }
-        100% { transform: translateY(-500px) scale(1.2); opacity: 0.1; }
+        0% { transform: translateY(0) scale(1); opacity: 0.15; }
+        50% { opacity: 0.35; }
+        100% { transform: translateY(-600px) scale(1.25); opacity: 0.15; }
+    }
+
+    /* Energía sutil de fondo */
+    .energy-ring {
+        position: absolute;
+        width: 800px;
+        height: 800px;
+        border-radius: 50%;
+        border: 1px dashed rgba(16, 185, 129, 0.12);
+        animation: spin-slow 60s linear infinite;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    @keyframes spin-slow {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
     }
 
     .container {
         position: relative;
         z-index: 10;
         text-align: center;
-        padding: 2rem 1rem;
+        padding: 2.5rem 1.5rem;
         width: 100%;
-        max-width: 1200px;
-        animation: villain-fade-in 1.5s ease-out forwards;
+        max-width: 1300px;
+        animation: villain-fade-in 1.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .badge-doom {
+        display: inline-block;
+        padding: 0.4rem 1.2rem;
+        background: rgba(4, 120, 87, 0.15);
+        border: 1px solid var(--doom-glow);
+        color: var(--doom-glow);
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        border-radius: 20px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 20px rgba(16, 185, 129, 0.25);
+        animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.2); border-color: rgba(16, 185, 129, 0.5); }
+        50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.5); border-color: var(--doom-glow); }
     }
 
     h1 {
         font-family: 'Bebas Neue', sans-serif;
-        /* Tamaño dinámico: se adapta al ancho de la pantalla */
-        font-size: clamp(3rem, 8vw, 5rem);
-        letter-spacing: clamp(3px, 1vw, 8px);
-        margin-bottom: 0.5rem;
-        background: linear-gradient(to bottom, var(--metal-light) 0%, var(--metal-mid) 50%, var(--metal-dark) 100%);
+        font-size: clamp(3rem, 7.5vw, 6rem);
+        letter-spacing: clamp(4px, 1.5vw, 10px);
+        margin-bottom: 0.4rem;
+        background: linear-gradient(to bottom, var(--metal-light) 0%, var(--metal-mid) 55%, var(--metal-dark) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-shadow: 0 5px 25px rgba(16, 185, 129, 0.2);
-        line-height: 1.1;
+        text-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        line-height: 1.05;
     }
 
     .subtitle {
-        font-size: clamp(0.7rem, 2vw, 1rem);
+        font-size: clamp(0.75rem, 2vw, 1.1rem);
         font-weight: 700;
-        letter-spacing: clamp(2px, 1vw, 6px);
+        letter-spacing: clamp(3px, 1.2vw, 7px);
         text-transform: uppercase;
         color: var(--doom-glow);
-        margin-bottom: clamp(2rem, 5vw, 3.5rem);
-        text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        text-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
     }
 
     .countdown {
         display: flex;
-        gap: clamp(0.8rem, 2vw, 1.5rem);
+        gap: clamp(0.6rem, 1.5vw, 1.2rem);
         justify-content: center;
-        flex-wrap: wrap; /* Permite que las cajas bajen a la siguiente línea en móviles muy pequeños */
+        flex-wrap: wrap;
     }
 
     .box {
-        width: clamp(75px, 22vw, 130px);
-        height: clamp(90px, 25vw, 150px);
+        width: clamp(72px, 16vw, 125px);
+        height: clamp(88px, 20vw, 145px);
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         background: var(--card-bg);
-        border: 2px solid var(--metal-dark);
-        border-top: 3px solid var(--metal-light);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 
-                    inset 0 0 20px rgba(4, 120, 87, 0.3);
-        backdrop-filter: blur(10px);
-        transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s;
-        border-radius: 8px; /* Un poco de borde redondeado para que luzca bien en móviles */
+        border: 2px solid rgba(71, 85, 105, 0.6);
+        border-top: 3px solid var(--doom-glow);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85), 
+                    inset 0 0 25px rgba(4, 120, 87, 0.25);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, border-color 0.4s;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .box::after {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%; width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+        transition: 0.5s;
+    }
+
+    .box:hover::after {
+        left: 100%;
     }
 
     .box:hover {
-        transform: scale(1.05) translateY(-5px);
-        border-color: var(--metal-mid);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.95), 
-                    inset 0 0 30px rgba(16, 185, 129, 0.5),
-                    0 0 20px rgba(16, 185, 129, 0.3);
+        transform: scale(1.06) translateY(-6px);
+        border-color: var(--doom-glow);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.95), 
+                    inset 0 0 35px rgba(16, 185, 129, 0.5),
+                    0 0 25px rgba(16, 185, 129, 0.35);
     }
 
     .number {
         font-family: 'Bebas Neue', sans-serif;
-        font-size: clamp(2.5rem, 8vw, 5.5rem);
+        font-size: clamp(2.3rem, 6.5vw, 5rem);
         line-height: 1;
         color: #fff;
-        text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         margin-bottom: 0.2rem;
         font-variant-numeric: tabular-nums; 
     }
 
     .label {
-        font-size: clamp(0.55rem, 1.5vw, 0.8rem);
+        font-size: clamp(0.5rem, 1.3vw, 0.75rem);
         font-weight: 700;
-        letter-spacing: clamp(1px, 0.5vw, 2px);
+        letter-spacing: clamp(1px, 0.5vw, 2.5px);
         text-transform: uppercase;
         color: var(--metal-mid);
     }
 
     .finished {
         font-family: 'Bebas Neue', sans-serif;
-        font-size: clamp(3rem, 10vw, 6rem);
+        font-size: clamp(2.8rem, 9vw, 6rem);
         letter-spacing: 4px;
         background: linear-gradient(to bottom, #34d399 0%, #047857 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         animation: villain-reveal 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        text-shadow: 0 0 50px rgba(16, 185, 129, 0.6);
+        text-shadow: 0 0 60px rgba(16, 185, 129, 0.7);
         line-height: 1.1;
         padding: 0 10px;
     }
 
     @keyframes villain-fade-in {
-        from { opacity: 0; transform: scale(1.05); filter: blur(15px); }
+        from { opacity: 0; transform: scale(1.04); filter: blur(12px); }
         to { opacity: 1; transform: scale(1); filter: blur(0); }
     }
 
@@ -170,20 +227,41 @@
     }
 
     @keyframes doom-impact {
-        0% { transform: scale(1); color: var(--doom-glow); text-shadow: 0 0 25px var(--doom-glow); }
-        100% { transform: scale(1); color: #fff; text-shadow: 0 0 15px rgba(255, 255, 255, 0.4); }
+        0% { transform: scale(1.12); color: var(--doom-glow); text-shadow: 0 0 30px var(--doom-glow); }
+        100% { transform: scale(1); color: #fff; text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+    }
+
+    /* Pie de página con fecha exacta */
+    .event-footer {
+        margin-top: 3.5rem;
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        color: var(--metal-mid);
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .event-footer span {
+        color: var(--metal-light);
+        font-weight: 700;
     }
 </style>
 </head>
 <body>
 
 <div class="magic-sparks"></div>
+<div class="energy-ring"></div>
 
 <div class="container">
+    <div class="badge-doom">Marvel Cinematic Universe</div>
     <h1>VENGADORES: DOOMSDAY</h1>
     <div class="subtitle">No hay esperanza. Solo existe Doom.</div>
 
     <div class="countdown" id="countdown-grid">
+        <div class="box">
+            <div id="months" class="number">00</div>
+            <div class="label">Meses</div>
+        </div>
         <div class="box">
             <div id="days" class="number">00</div>
             <div class="label">Días</div>
@@ -201,15 +279,19 @@
             <div class="label">Segundos</div>
         </div>
     </div>
+
+    <div class="event-footer">
+        Fecha de condena: <span>17 de Diciembre de 2026 • 19:00h</span>
+    </div>
 </div>
 
 <script>
-    // Fecha objetivo: 17 de diciembre a las 19:00 (7 de la tarde)
-    const target = new Date("2026-12-17T19:00:00").getTime();
+    // Fecha objetivo: 17 de diciembre de 2026 a las 19:00
+    const targetDate = new Date("2026-12-17T19:00:00");
 
     function updateCountdown() {
-        const now = new Date().getTime();
-        const diff = target - now;
+        const now = new Date();
+        const diff = targetDate - now;
 
         if (diff <= 0) {
             document.querySelector(".container").innerHTML = `
@@ -220,16 +302,33 @@
             return;
         }
 
-        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        // Cálculo preciso incluyendo meses calendario
+        let years = targetDate.getFullYear() - now.getFullYear();
+        let months = targetDate.getMonth() - now.getMonth() + (years * 12);
+        let days = targetDate.getDate() - now.getDate();
+
+        // Si los días son negativos, ajustamos restando un mes y sumando los días del mes anterior
+        if (days < 0) {
+            months--;
+            const prevMonth = new Date(targetDate.getFullYear(), targetDate.getMonth() - 1, now.getDate());
+            // Días en el mes anterior
+            const daysInPrevMonth = new Date(targetDate.getFullYear(), targetDate.getMonth(), 0).getDate();
+            // Aproximación exacta de días restantes
+            const tempDate = new Date(now);
+            tempDate.setMonth(tempDate.getMonth() + months);
+            let diffDaysTime = targetDate - tempDate;
+            days = Math.floor(diffDaysTime / (1000 * 60 * 60 * 24));
+        }
+
         const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
         const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
         const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-        const values = { days, hours, minutes, seconds };
+        const values = { months, days, hours, minutes, seconds };
 
         for (const id in values) {
             const el = document.getElementById(id);
-            if(!el) continue;
+            if (!el) continue;
             
             const value = String(values[id]).padStart(2, "0");
 
